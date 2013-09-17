@@ -9,9 +9,9 @@
 
   <genericsetup:registerProfile
       name="default"
-      title="abstract.downloadmarshal"
+      title="Abstract Downloadmarshal"
       directory="profiles/default"
-      description="Installs the abstract.downloadmarshal package"
+      description="Marshal files download"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   <!-- -*- extra stuff goes here -*- -->
