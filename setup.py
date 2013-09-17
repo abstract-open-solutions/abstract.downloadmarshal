@@ -6,7 +6,7 @@ version = '1.0'
 setup(name='abstract.downloadmarshal',
       version=version,
       description="A download marshal",
-      long_description=open("README.txt").read() + "\n" +
+      long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from
       # http://pypi.python.org/pypi?:action=list_classifiers
