@@ -12,11 +12,14 @@ from ..interfaces import IMarshal
 class Download(BaseDownload):
 
     def __call__(self):
+        message = "you cannot download this!"
         marshal = self.get_marshal()
-        if marshal and marshal.validate():
-            marshal.consume()
-            return super(Download, self).__call__()
-        raise Unauthorized('ennó! non puoi scaricare!')
+        if marshal:
+            is_valid, message = marshal.validate()
+            if is_valid:
+                marshal.consume()
+                return super(Download, self).__call__()
+        raise Unauthorized(message)
 
     def get_marshal(self):
         marshal = None

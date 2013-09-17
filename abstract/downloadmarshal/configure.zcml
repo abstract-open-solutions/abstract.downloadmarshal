@@ -19,6 +19,13 @@
   <include package=".browser" />
   <adapter factory=".adapters.MarshalStorageManager" />
   <adapter factory=".adapters.Marshal" />
-  <!-- <adapter factory=".adapters.MarshalValidator" /> -->
+  <adapter
+    factory=".adapters.MaxDownload"
+    name="max_download"
+    />
+  <adapter
+    factory=".adapters.DaysValidity"
+    name="days_validity"
+    />
 
 </configure>

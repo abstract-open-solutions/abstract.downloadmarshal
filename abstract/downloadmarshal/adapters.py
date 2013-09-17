@@ -10,8 +10,9 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.annotation.interfaces import IAnnotations
 
 from interfaces import IDownloadable
-from interfaces import IMarshal
 from interfaces import IMarshalStorageManager
+from interfaces import IMarshal
+from interfaces import IValidator
 from utils import _generate_token
 from utils import get_settings
 from utils import TOKEN_REQUEST_VAR
@@ -124,19 +125,63 @@ class Marshal(object):
         if not storage.has_key(token):
             return False
         data = storage[token]
-        print data
+        is_valid = True
+        message = ''
+        for name, validator in self._validators():
+            if not validator.validate(data):
+                is_valid = False
+                message = validator.invalid_message
+                break
+        return (is_valid, message)
+
+    def _validators(self):
+        return component.getAdapters(
+            (self, self.context, self.request),
+            IValidator
+        )
+
+
+class Validator(object):
+
+    interface.implements(IValidator)
+    component.adapts(IMarshal, IDownloadable, IBrowserRequest)
+
+    invalid_message = ''
+
+    def __init__(self, marshal, context, request):
+        self.marshal = marshal
+        self.context = context
+        self.request = request
+        self.settings = get_settings()
+
+    def validate(self, data):
+        raise NotImplementedError("you must provide a `validate` method!")
+
+
+class MaxDownload(Validator):
+
+    invalid_message = "Max download count reached!"
+
+    def validate(self, data):
         count_check = True
-        date_check = True
         # check download limit
         if self.settings.max_download_count > 0:
             count_check = False
             if data['count'] <= self.settings.max_download_count:
                 count_check = True
+        return count_check
+
+
+class DaysValidity(Validator):
+
+    invalid_message = "Max days count reached!"
+
+    def validate(self, data):
+        date_check = True
         if self.settings.validity_days > 0:
-            date_check = False
             delta = datetime.timedelta(self.settings.validity_days)
             max_date = data['date'] + delta
             today = datetime.date.today()
-            if today <= max_date:
-                date_check = True
-        return count_check and date_check
+            if today > max_date:
+                date_check = False
+        return date_check
