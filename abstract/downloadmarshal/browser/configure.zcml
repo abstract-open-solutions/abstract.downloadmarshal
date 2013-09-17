@@ -9,7 +9,7 @@
         name="download"
         class=".download.Download"
         permission="zope2.View"
-        layer="..interfaces.IThemeSpecific"
+        layer="..interfaces.ILayer"
         />
 
 </configure>

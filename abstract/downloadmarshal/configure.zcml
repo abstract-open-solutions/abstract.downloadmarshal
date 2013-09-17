@@ -16,7 +16,9 @@
       />
   <!-- -*- extra stuff goes here -*- -->
 
+  <include package=".browser" />
   <adapter factory=".adapters.MarshalStorageManager" />
   <adapter factory=".adapters.Marshal" />
+  <!-- <adapter factory=".adapters.MarshalValidator" /> -->
 
 </configure>
