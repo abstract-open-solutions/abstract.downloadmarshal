@@ -22,7 +22,7 @@ class IMarshalGlobalSettings(Interface):
     max_download_count = schema.Int(
         title=_(u"Max download count"),
         # description=_('Max numnber of download per token'),
-        default=-1,
+        default=1,
     )
 
     validity_days = schema.Int(
