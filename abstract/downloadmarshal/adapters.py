@@ -38,6 +38,10 @@ class MarshalStorageManager(object):
         storage = self.get_storage()
         return storage.has_key(key)
 
+    def get_data(self, key):
+        storage = self.get_storage()
+        return storage.get(key)
+
     def save(self, key, data, check=True):
         storage = self.get_storage()
         if check and self.has_key(key):
@@ -121,10 +125,9 @@ class Marshal(object):
             token = self.get_token()
         if token is None:
             return False
-        storage = self.storage_manager.get_storage()
-        if not storage.has_key(token):
+        data = self.storage_manager.get_data(token)
+        if data is None:
             return False
-        data = storage[token]
         is_valid = True
         message = ''
         for name, validator in self._validators():

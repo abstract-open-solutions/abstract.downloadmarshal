@@ -19,7 +19,9 @@ class Download(BaseDownload):
             if is_valid:
                 marshal.consume()
                 return super(Download, self).__call__()
-        raise Unauthorized(message)
+        url = self.context.absolute_url()
+        self.request.response.redirect(url)
+        # raise Unauthorized(message)
 
     def get_marshal(self):
         marshal = None
