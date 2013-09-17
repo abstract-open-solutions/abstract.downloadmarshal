@@ -1,0 +1,15 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="abstract.downloadmarshal">
+
+    <include package="plone.browserlayer" />
+
+    <browser:page
+        for="abstract.downloadmarshal.interfaces.IDownloadable"
+        name="download"
+        class=".download.Download"
+        permission="zope2.View"
+        layer="..interfaces.IThemeSpecific"
+        />
+
+</configure>
