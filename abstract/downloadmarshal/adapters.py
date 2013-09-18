@@ -122,7 +122,7 @@ class Marshal(object):
 
     def validate(self, token=None):
         if self.can_bypass():
-            return True
+            return (True, '')
         if token is None:
             token = self.get_token()
         if token is None:
