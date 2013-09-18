@@ -90,7 +90,9 @@ class Marshal(object):
             fieldname = 'file'
         url_data = {
             'res_url': self.context.absolute_url(),
-            'fieldname': fieldname,
+            # XXX: this fail somewhat because 'file' gets replaced with resource.id :O
+            # 'fieldname': fieldname,
+            'fieldname': 'file',
             'token_var': TOKEN_REQUEST_VAR,
             'token': token,
         }
