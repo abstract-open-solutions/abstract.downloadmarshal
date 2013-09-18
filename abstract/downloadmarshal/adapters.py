@@ -82,10 +82,12 @@ class Marshal(object):
             self.storage_manager.update(token)
         return token
 
-    def generate_token_url(self, fieldname='file', token=None):
+    def generate_token_url(self, fieldname=None, token=None):
         url_pattern = '%(res_url)s/@@download/%(fieldname)s?%(token_var)s=%(token)s'
         if token is None:
             token = self.generate_token()
+        if fieldname is None:
+            fieldname = 'file'
         url_data = {
             'res_url': self.context.absolute_url(),
             'fieldname': fieldname,
