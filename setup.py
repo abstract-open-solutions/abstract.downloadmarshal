@@ -6,14 +6,16 @@ version = '1.0'
 setup(name='abstract.downloadmarshal',
       version=version,
       description="A download marshal",
-      long_description=open("README.rst").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+      long_description=(
+          open("README.rst").read() + "\n" +
+          open(os.path.join("docs", "HISTORY.txt")).read()
+      ),
       # Get more strings from
       # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[
-        "Framework :: Plone",
-        "Programming Language :: Python",
-        ],
+          "Framework :: Plone",
+          "Programming Language :: Python",
+      ],
       keywords='',
       author='',
       author_email='',
@@ -25,7 +27,7 @@ setup(name='abstract.downloadmarshal',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+          'Products.CMFPlone'
       ],
       entry_points="""
       # -*- Entry points: -*-

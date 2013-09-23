@@ -5,7 +5,9 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="abstract.downloadmarshal">
 
-  <five:registerPackage package="." initialize=".initialize" />
+
+  <includeDependencies package="." />
+  <i18n:registerTranslations directory="locales" />
 
   <genericsetup:registerProfile
       name="default"
@@ -14,15 +16,16 @@
       description="Marshal files download"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-  <!-- -*- extra stuff goes here -*- -->
 
   <include package=".browser" />
   <adapter factory=".adapters.MarshalStorageManager" />
   <adapter factory=".adapters.Marshal" />
+
   <adapter
     factory=".adapters.MaxDownload"
     name="max_download"
     />
+
   <adapter
     factory=".adapters.DaysValidity"
     name="days_validity"

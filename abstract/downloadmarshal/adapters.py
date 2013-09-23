@@ -123,20 +123,25 @@ class Marshal(object):
         return can
 
     def validate(self, token=None):
+        """return
+        (1, '') valid token
+        (2, '') bypass_roles user can download without token
+        (0, 'error message') invalid token
+        """
         if self.can_bypass():
-            return (True, '')
+            return (2, '')
         if token is None:
             token = self.get_token()
         if token is None:
-            return (False, '')
+            return (0, '')
         data = self.storage_manager.get_data(token)
         if data is None:
-            return (False, '')
-        is_valid = True
+            return (0, '')
+        is_valid = 1
         message = ''
         for name, validator in self._validators():
             if not validator.validate(data):
-                is_valid = False
+                is_valid = 0
                 message = validator.invalid_message
                 break
         return (is_valid, message)
