@@ -8,6 +8,11 @@ from ..interfaces import IMarshal
 from .. import messageFactory as _
 
 
+ERROR_MESSAGE = _(
+    u"Sorry, you are not allowed to download "
+    u"this resource.")
+
+
 class Download(BaseDownload):
 
     def __call__(self):
@@ -21,8 +26,7 @@ class Download(BaseDownload):
                 return super(Download, self).__call__()
 
         IStatusMessage(self.request).addStatusMessage(
-            _(u"Sorry, you are not allowed to download "
-              u"this resource."),
+            ERROR_MESSAGE,
             type="error"
         )
 

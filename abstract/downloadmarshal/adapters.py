@@ -18,6 +18,7 @@ from utils import get_settings
 from utils import TOKEN_REQUEST_VAR
 
 ANN_KEY = 'abstract.downloadmarshal:storage'
+URL_PATTERN = '%(url)s/@@download/%(fieldname)s?%(token_var)s=%(token)s'
 
 
 class MarshalStorageManager(object):
@@ -82,21 +83,25 @@ class Marshal(object):
             self.storage_manager.update(token)
         return token
 
-    def generate_token_url(self, fieldname=None, token=None):
-        url_pattern = '%(res_url)s/@@download/%(fieldname)s?%(token_var)s=%(token)s'
+    def generate_token_url_data(self, fieldname=None, token=None):
         if token is None:
             token = self.generate_token()
         if fieldname is None:
             fieldname = 'file'
         url_data = {
-            'res_url': self.context.absolute_url(),
-            # XXX: this fail somewhat because 'file' gets replaced with resource.id :O
+            'url': self.context.absolute_url(),
+            # XXX: this fail somewhat because 'file'
+            # gets replaced with resource.id :O
             # 'fieldname': fieldname,
             'fieldname': 'file',
             'token_var': TOKEN_REQUEST_VAR,
             'token': token,
         }
-        return url_pattern % url_data
+        return url_data
+
+    def generate_token_url(self, fieldname=None, token=None):
+        url_data = self.generate_token_url_data(fieldname, token)
+        return URL_PATTERN % url_data
 
     def consume(self, token=None):
         if token is None:
