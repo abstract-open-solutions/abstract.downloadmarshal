@@ -12,4 +12,12 @@
         layer="..interfaces.ILayer"
         />
 
+    <browser:page
+        for="abstract.downloadmarshal.interfaces.IDownloadable"
+        name="display-file"
+        class=".display.DisplayFile"
+        permission="zope2.View"
+        layer="..interfaces.ILayer"
+        />
+
 </configure>
