@@ -184,7 +184,7 @@ class MaxDownload(Validator):
         # check download limit
         if self.settings.max_download_count > 0:
             count_check = False
-            if data['count'] <= self.settings.max_download_count:
+            if data['count'] < self.settings.max_download_count:
                 count_check = True
         return count_check
 
