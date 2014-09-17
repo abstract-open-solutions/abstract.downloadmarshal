@@ -30,3 +30,15 @@ class Download(BaseDownload, MarshalViewMixIn):
 
         url = self.context.absolute_url()
         self.request.response.redirect(url)
+
+    def set_headers(self, file):
+        super(Download, self).set_headers(file)
+        # we set some extra header to avoid caching
+        self.request.response.addHeader('Pragma', "no-cache")
+        self.request.response.addHeader('Cache-Control',
+                                        'must-revalidate, \
+                                        post-check=0, \
+                                        pre-check=0, \
+                                        public')
+        self.request.response.addHeader('Expires', "0")
+
